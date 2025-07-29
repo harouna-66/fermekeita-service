@@ -1,0 +1,447 @@
+/* Variables CSS pour faciliter les changements de couleur */
+:root {
+    --primary-color: #4CAF50; /* Vert agriculture */
+    --secondary-color: #8BC34A; /* Vert plus clair */
+    --text-color: #333;
+    --light-bg: #f4f4f4;
+    --white: #fff;
+    --dark-grey: #555;
+}
+
+/* Réinitialisation de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--white);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden; /* Pour contenir les floats */
+}
+
+/* En-tête (Header) */
+header {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 1rem 0;
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+header nav ul {
+    list-style: none;
+}
+
+header nav ul li {
+    display: inline;
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: var(--light-bg);
+}
+
+/* Menu Burger (Mobile) */
+.menu-toggle {
+    display: none; /* Caché par défaut pour le bureau */
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--white);
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+/* Section Accueil (Hero) - MODIFIÉ POUR LE SLIDER D'ARRIÈRE-PLAN */
+.hero {
+    /* REMPLACÉ: background: url('../images/hero-bg.jpg') no-repeat center center/cover; */
+    background-color: #333; /* Couleur de fond de repli si les images ne chargent pas */
+    color: var(--white);
+    text-align: center;
+    padding: 100px 0; /* Gardez votre padding d'origine */
+    min-height: 500px; /* Gardez votre hauteur minimale */
+    display: flex; /* Gardez votre flexbox pour centrer le contenu */
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative; /* TRÈS IMPORTANT: pour positionner le slider de fond */
+    overflow: hidden; /* TRÈS IMPORTANT: pour cacher les images qui dépassent */
+    z-index: 0; /* Assurez-vous qu'il est la couche de base */
+}
+
+/* Overlay sombre pour la lisibilité du texte - Z-index ajusté */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay sombre pour la lisibilité du texte */
+    z-index: 1; /* AU-DESSUS du slider de fond, SOUS le texte */
+}
+
+/* Conteneur du texte du hero - Z-index ajusté */
+.hero .container {
+    position: relative; /* Nécessaire pour que z-index fonctionne */
+    z-index: 2; /* AU-DESSUS de l'overlay et du slider de fond */
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--secondary-color);
+    color: var(--white);
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: var(--primary-color);
+}
+
+/* NOUVEAU: Styles pour le défilement des images de fond (Background Slider) */
+.hero-background-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%; /* Important: Assez large pour contenir toutes les images et leur répétition */
+    height: 150%;
+    display: flex; /* Pour aligner les images côte à côte */
+    animation: slideBackground  10s linear infinite; /* Animation de défilement */
+    z-index: 0; /* Assurez-vous qu'il est la couche la plus basse du hero */
+}
+
+.hero-background-slider img {
+    flex-shrink: 0; /* Empêche les images de rétrécir */
+    /* Calcul de la largeur: (100% / nombre_total_d_images_dans_le_HTML) * largeur_du_slider_en_pourcentage_du_parent */
+    /* Ex: si 4 images uniques, répétées 2 fois = 8 images au total. Largeur du slider = 200% du parent. */
+    /* Donc: (100% / 8 images) * 200% = 12.5% * 2 = 25% */
+    width: 25%;
+    height: 100%;
+    object-fit: cover; /* Assure que l'image couvre l'espace sans déformation */
+    display: block; /* Supprime l'espace sous l'image */
+}
+
+/* NOUVEAU: Keyframes pour l'animation de défilement */
+@keyframes slideBackground {
+    0% {
+        transform: translateX(0%); /* Démarrer complètement à gauche */
+    }
+    100% {
+        transform: translateX(-50%); /* Déplacer de 50% de la largeur du slider vers la gauche */
+                                    /* Ceci correspond exactement à la largeur de la série originale d'images */
+                                    /* ce qui permet une boucle parfaite */
+    }
+}
+
+
+/* Sections Générales */
+section {
+    padding: 60px 0;
+    text-align: center;
+}
+
+section h3 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+}
+
+/* À Propos */
+.about {
+    background: var(--light-bg);
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; /* Permet le passage à la ligne sur mobile */
+    gap: 30px;
+    text-align: left;
+}
+
+.about-content img {
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.about-content div {
+    flex: 1;
+    min-width: 300px; /* Empêche le contenu de devenir trop étroit */
+}
+
+/* Produits */
+.products {
+    background: var(--white);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.product-item {
+    background: var(--light-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+}
+
+.product-item img {
+    max-width: 100%;
+    height: 200px; /* Hauteur fixe pour les images de produits */
+    object-fit: cover; /* Recadre l'image pour remplir l'espace */
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.product-item h4 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+/* Méthodes d'Élevage */
+.breeding-methods {
+    background: var(--light-bg);
+    text-align: left;
+}
+
+.breeding-methods ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.breeding-methods ul li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.breeding-methods ul li::before {
+    content: '\2713'; /* Coche */
+    color: var(--primary-color);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* Contact */
+.contact {
+    background: var(--white);
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: var(--dark-grey);
+}
+
+.contact-info i {
+    color: var(--primary-color);
+    margin-right: 10px;
+    width: 20px; /* Alignement des icônes */
+    text-align: center;
+}
+
+.map-container {
+    margin-top: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 450px;
+    border: 0;
+}
+
+.cta-contact {
+    margin-top: 30px;
+    font-style: italic;
+    color: var(--dark-grey);
+}
+
+/* Pied de page (Footer) */
+footer {
+    background: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+footer p {
+    margin: 0;
+}
+
+.social-links a {
+    color: var(--white);
+    font-size: 1.5rem;
+    margin-left: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--light-bg);
+}
+
+/* Media Queries pour la Responsivité */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    header nav {
+        order: 3;
+        flex-basis: 100%;
+        display: none;
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    header nav.active {
+        display: block;
+    }
+
+    header nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* Ajustements du Hero sur mobile */
+    .hero {
+        min-height: 400px; /* Hauteur ajustée pour les petits écrans */
+        padding: 60px 0; /* Padding ajusté */
+    }
+    .hero h2 {
+        font-size: 2.2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .hero-background-slider img {
+        /* Si vous remarquez un décalage ou que trop peu d'images sont visibles sur mobile,
+           vous pouvez ajuster cette largeur. Par exemple, pour afficher deux images à la fois: */
+        /* width: 50%; */
+    }
+
+
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-content img {
+        max-width: 100%;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr; /* Une colonne sur mobile */
+    }
+
+    footer .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 0;
+        min-height: 300px;
+    }
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+    .hero p {
+        font-size: 0.9rem;
+    }
+    section h3 {
+        font-size: 2rem;
+    }
+
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Le slider de fond s'adapte bien, pas de changements majeurs nécessaires ici */
+}
